@@ -1,0 +1,9 @@
+POST http://localhost:8000/artists/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Pablo Picasso",
+  "img_url": "https://example.com/picasso.jpg",
+  "contacts": "contact@picasso.com",
+  "description": "Famous painter and sculptor."
+}

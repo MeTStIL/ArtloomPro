@@ -1,0 +1,11 @@
+POST http://localhost:8000/paintings/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Guernica",
+  "artist_account_id": 1,
+  "img_url": "https://example.com/guernica.jpg",
+  "year": 1937,
+  "description": "A famous anti-war painting by Pablo Picasso.",
+  "medium": "Oil on canvas"
+}

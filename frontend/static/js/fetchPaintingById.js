@@ -1,6 +1,8 @@
+import { apiBaseUrl } from './apiConfig.js';
+
 export async function fetchPaintingById(paintingId) {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/paintings/${paintingId}`);
+        const response = await fetch(`${apiBaseUrl}/paintings/${paintingId}`);
         if (!response.ok) {
             throw new Error(`Ошибка HTTP: ${response.status}`);
         }

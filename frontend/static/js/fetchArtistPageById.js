@@ -1,8 +1,15 @@
 import { apiBaseUrl } from './apiConfig.js';
 
-export async function fetchArtistById(artistId) {
+export async function fetchArtistPageById(artistPageId) {
     try {
-        const response = await fetch(`${apiBaseUrl}/artists/${artistId}`);
+        const token = localStorage.getItem('access_token');
+
+        const response = await fetch(`${apiBaseUrl}/artist-pages/${artistPageId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         if (!response.ok) {
             throw new Error(`Ошибка HTTP: ${response.status}`);
         }

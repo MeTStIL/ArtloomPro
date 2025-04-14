@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ARTLOOM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<!--    <script type="module" src="../static/js/checkAuth.js"></script>-->
+    <script type="module" src="../static/js/error-handler.js"></script>
+</head>
+<script type="module" src="../static/js/account-page.js" onerror="handleScriptError()"></script>
+<body>
+    <header>
+        <div class="nav no-select">
+            <span class="title no-select">ARTLOOM</span>
+            <span class="nav-menu no-select">
+                    <span class="menu-item no-select">главная</span>
+                    <span class="menu-item no-select" id="pc-username"><a href="/login">вход</a></span>
+                </span>
+            <span class="nav-menu-loader no-select">
+                    <img class="no-select" id="menu-icon" src="{{ url_for('static', filename='root/menu.svg') }}" alt="">
+                </span>
+        </div>
+    </header>
+
+    <div class="more no-select" id="more">
+        <div class="container no-select">
+            <div class="menu-item no-select">главная</div>
+            <div class="menu-item vertical-last no-select" id="mobile-username"><a href="/login">вход</a></div>
+        </div>
+    </div>
+    <div id="main-picture" style="height: 0;" class="main-picture-container no-select"></div>
+    <div class="container no-select">
+        <div class="add-button" id="artist-page-button"><div>Создать страницу</div></div>
+        <a id="my-page"><div>Моя страница</div></a>
+        <div class="block no-select favorite">
+            <div class="gallery-title no-select">Авторы</div>
+            <div class="gallery-caption no-select">Тут представлены художники, работы которых вы оценили</div>
+            <div id="authors" class="gallery no-select"></div>
+        </div>
+        <div class="block no-select">
+            <div class="gallery-title no-select">Избранное</div>
+            <div class="gallery-caption no-select">В этом разделе находятся работы, которые вам понравились</div>
+            <div id="gallery" class="gallery no-select"></div>
+        </div>
+    </div>
+    <footer>
+        <div class="container no-select" id="contacts">
+            <div class="links no-select"></div>
+            <div class="copy no-select">© 2025  ARTLOOM. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
+        </div>
+    </footer>
+    <div class="overlay no-select" id="overlay">
+        <img class="no-select" src="" alt="" id="fullImage">
+        <div class="image-description no-select" id="imageDescription"></div>
+    </div>
+    <div class="popup" id="add-page-popup">
+        <div class="popup-content">
+            <form id="popup-form">
+                <input type="hidden" name="section_id2" value="">
+                <label for="popup-title">Псевдоним</label>
+                <input type="text" id="popup-title" name="popup-title" maxlength="30" placeholder="Введите псевдоним"/>
+                <label for="popup-desc">О себе</label>
+                <textarea id="popup-desc" name="popup-desc" placeholder="Расскажите о себе"></textarea>
+                <button type="submit" id="popup-submit">СОЗДАТЬ</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

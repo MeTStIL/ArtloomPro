@@ -1,7 +1,9 @@
+import { apiBaseUrl } from './apiConfig.js';
+
 async function fetchData() {
     try {
         // Выполняем GET-запрос к FastAPI
-        const response = await fetch('http://localhost:8000');
+        const response = await fetch(`${apiBaseUrl}`);
 
         // Проверяем, успешен ли запрос
         if (!response.ok) {

@@ -1,0 +1,199 @@
+* {
+	padding: 0px;
+	margin: 0px;
+	border: none;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Yandex Sans Display';
+    src: url('../static/fonts/YandexSansDisplay-Regular.eot');
+    src: local('Yandex Sans Display Regular'), local('YandexSansDisplay-Regular'),
+        url('../static/fonts/YandexSansDisplay-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../static/fonts/YandexSansDisplay-Regular.woff2') format('woff2'),
+        url('../static/fonts/YandexSansDisplay-Regular.woff') format('woff'),
+        url('../static/fonts/YandexSansDisplay-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Yandex Sans Display';
+    src: url('../static/fonts/YandexSansDisplay-Bold.eot');
+    src: local('Yandex Sans Display Bold'), local('YandexSansDisplay-Bold'),
+        url('../static/fonts/YandexSansDisplay-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../static/fonts/YandexSansDisplay-Bold.woff2') format('woff2'),
+        url('../static/fonts/YandexSansDisplay-Bold.woff') format('woff'),
+        url('../static/fonts/YandexSansDisplay-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap');
+
+body {
+    font-family: "Yandex Sans Display";
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+header {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 74px;
+    background-color: #ddecfc;
+    padding-right: 110px;
+    padding-left: 110px;
+}
+
+.nav {
+    width: 100%;
+    height: 74px;
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-family: 'Mitr';
+    color: #4063C4;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.nav-menu {
+    margin-left: auto;
+}
+
+.menu-item {
+    cursor: pointer;
+    font-family: 'Yandex Sans Display';
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 22px;
+    color: #141414;
+}
+
+.menu-item:hover {
+    color: #4063C4;
+}
+
+
+.nav-menu-loader {
+    margin-left: auto;
+    display: none;
+}
+
+.more {
+    display: flex;
+    align-items: center;
+    padding-top: 74px;
+    z-index: 999;
+    position: fixed;
+    width: 100%;
+    height: 214px;
+    background-color: #eaf4ff;
+    transform: translateY(-100%);
+    transition: transform 0.2s ease-in-out;
+}
+
+@media (min-width: 900px) {
+    .more {
+        display: none;
+    }
+}
+
+.more.show {
+    transform: translateY(0);
+}
+
+.container {
+    padding-left: 110px;
+    padding-right: 110px;
+}
+
+.vertical-middle {
+    margin: 10px 0;
+}
+
+.vertical-last {
+    margin-bottom: 10px;
+}
+
+.container-form {
+    width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #000000;
+    border-radius: 15px;
+}
+
+input[type="text"], input[type="password"] {
+    width: 94%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    font-size: 16px;
+    width: 100%;
+    padding: 10px;
+    background-color: #4063C4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.create-account {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    margin-top: 15px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+}
+
+footer {
+    position: fixed;
+    bottom: 10px;
+    text-align: center;
+    width: 100%;
+    color: #ccc;
+}
+
+a {
+    color: #222;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #4063C4;
+}

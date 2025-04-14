@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!--    <script type="module" src="../static/js/checkAuth.js"></script>-->
     <script type="module" src="../static/js/error-handler.js"></script>
-    <script type="module" src="../static/js/artist-page.js" onerror="handleScriptError()"></script>
 </head>
+<script type="module" src="../static/js/artist-page-editor.js" onerror="handleScriptError()"></script>
 <body>
 <div id="loader" class="loader"></div>
 <div id="content">
@@ -35,8 +35,14 @@
     </div>
     <div id="main-picture" class="main-picture-container no-select">
         <div class="flex-container">
+            <div class="settings" id="change-background-btn">
+                Изменить фон
+            </div>
             <div class="main-info">
-                <div id="author-name" class="main-author-name">Юрий Ромашов</div>
+                <div class="main-author-name">
+                    <span id="author-name">Псевдоним</span>
+                    <span id="change-author-name-btn"><img src="../static/root/change.svg" alt=""></span>
+                </div>
                 <div class="main-links">
                     <div class="link like">
                         <img src="../static/root/like.svg" alt="">
@@ -59,19 +65,26 @@
     </div>
     <div class="container no-select">
         <div class="block no-select">
-            <a class="description" id="editor">Перейти в режим редактирования</a>
+            <a class="description" id="editor">Выйти из режима редактирования</a>
             <div class="gallery-title no-select">Галерея</div>
-            <div class="gallery-caption no-select">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore
-                facere quia perferendis saepe, distinctio sint sapiente cupiditate tenetur sequi inventore quae est!
-                Porro, labore magnam natus culpa recusandae itaque fugiat?
+            <button id="change-painting-describe-btn" style="margin-bottom: 10px;">
+                Изменить описание «Галереи»
+            </button>
+            <div class="gallery-caption no-select">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore facere quia perferendis saepe, distinctio sint sapiente cupiditate tenetur sequi inventore quae est! Porro, labore magnam natus culpa recusandae itaque fugiat?</div>
+            <div id="gallery" class="gallery no-select">
+                <div class="first">
+                    <div class="plus-container">
+                        <img src="../static/root/plus.svg" alt="">
+                    </div>
+                </div>
+
             </div>
-            <div id="gallery" class="gallery no-select"></div>
         </div>
     </div>
     <footer>
         <div class="container no-select" id="contacts">
             <div class="links no-select"></div>
-            <div class="copy no-select">© 2025 ARTLOOM. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
+            <div class="copy no-select">© 2025  ARTLOOM. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
         </div>
     </footer>
     <div class="overlay no-select" id="overlay">
@@ -93,9 +106,42 @@
             </form>
         </div>
     </div>
+
+    <div class="popup" id="change-background-popup">
+        <div class="popup-content">
+            <form id="change-background-form">
+               <label for="new-background">Новый задний фон</label>
+                <input type="file" name="new-background" id="new-background">
+
+                <button type="submit">Изменить задний фон</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup" id="change-author-name-popup">
+        <div class="popup-content">
+            <form id="change-author-name-form">
+                <label for="new-author-name">Новый псевдоним</label>
+                <input type="text" name="new-author-name" id="new-author-name" placeholder="">
+
+                <button type="submit">Изменить псевдоним</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup" id="change-painting-describe-popup">
+        <div class="popup-content">
+            <form id="change-painting-describe-form">
+                <label for="new-painting-describe">Новое описание картины</label>
+                <textarea name="new-painting-describe" id="new-painting-describe"></textarea>
+
+                <button type="submit">Изменить описание картины</button>
+            </form>
+        </div>
+    </div>
 </div>
 <script>
-    window.onload = function () {
+    window.onload = function() {
         const loader = document.getElementById('loader');
         const content = document.getElementById('content');
 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
+    <title>Вход в аккаунт</title>
+    <script type="module" src="../static/js/auth.js" onerror="handleScriptError()" ></script>
+</head>
+<body>
+    <header>
+        <div class="nav no-select">
+            <span class="title no-select">ARTLOOM</span>
+            <span class="nav-menu no-select">
+                <span class="menu-item no-select"><a href="/">главная</a></span>
+                <span class="menu-item no-select" id="pc-username"><a href="/login">вход</a></span>
+            </span>
+            <span class="nav-menu-loader no-select">
+                <img class="no-select" id="menu-icon" src="{{ url_for('static', filename='root/menu.svg') }}" alt="">
+            </span>
+        </div>
+    </header>
+
+    <div class="more no-select" id="more">
+        <div class="container no-select">
+            <div class="menu-item no-select"><a href="/">главная</a></div>
+            <div class="menu-item vertical-last no-select" id="mobile-username"><a href="/login">вход</a></div>
+        </div>
+    </div>
+
+    <div class="container-form" id="content">
+        <h1>Вход</h1>
+        <form action="#" method="post">
+            <div class="input-group">
+                <input type="text" id="name" name="name" placeholder="Введите ваш логин" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Введите пароль" required>
+            </div>
+            <button type="submit">Войти</button>
+        </form>
+        <!--<div class="social-login">
+            <p>Войти с помощью:</p>
+            <div class="social-buttons">
+                <button class="google">Google</button>
+                <button class="vk">ВКонтакте</button>
+                <button class="telegram">Telegram</button>
+            </div>
+        </div>-->
+        <p class="create-account"><a href="/register"><b>Создать аккаунт</b></a></p>
+    </div>
+    <footer>
+        <div class="container-footer no-select" id="contacts">
+            <div class="links no-select"></div>
+            <div class="copy no-select">© 2025  ARTLOOM. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
+        </div>
+    </footer>
+</body>
+</html>

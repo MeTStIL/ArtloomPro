@@ -7,9 +7,26 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route('/artist_pages/<int:artist_page_id>')
-def artist_page(artist_page_id):
+@app.route('/<string:login>')
+def artist_page(login):
     return render_template("artist-page.html")
+
+@app.route('/editor/<string:login>')
+def artist_page_editor(login):
+    return render_template("artist-page-editor.html")
+
+@app.route('/accounts/<string:login>')
+def account_page(login):
+    return render_template("account-page.html")
+
+@app.route('/register')
+def register():
+    return render_template("register.html")
+
+
+@app.route('/login')
+def login():
+    return render_template("login.html")
 
 
 def main():

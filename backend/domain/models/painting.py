@@ -1,29 +1,21 @@
-from pydantic import BaseModel, Field
-from typing import Optional
-from tortoise import fields
-from tortoise.models import Model
+from pgvector.sqlalchemy import Vector
+from sqlalchemy import Column, Integer, Text, ForeignKey, ARRAY, String
+from backend.infrastructure.database.db import Base
+from sqlalchemy.orm import relationship
 
 
-class Painting(BaseModel):
-    id: int = Field(..., description='ID Картины', example=1)
-    title: str = Field(..., description='Название картины', example='Апофеоз войны')
-    artist_account_id: int = Field(..., description='ID профиля Художника', example=1)
-    img_url: str = Field(..., description='Ссылка на картину', example='https://www.example.com/paintings/sample.jpg')
-    year: Optional[int] = Field(None, description='Год написания картины', example=1871)
-    description: Optional[str] = Field(None, description='Описание картины', example='Посвящается всем великим завоевателям — прошедшим, настоящим и будущим')
-    medium: Optional[str] = Field(None, description='Основные характеристики картины', example='Холст, Масло. 127 × 197 см')
-    times_favorite: Optional[int] = None
+class Painting(Base):
+    __tablename__ = "paintings"
 
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    description = Column(Text, nullable=True)
+    img_path = Column(Text, nullable=False, unique=True)
+    artist_id = Column(Integer, ForeignKey("artists.id"), nullable=False)
+    img_embedding = Column(Vector(512), nullable=True)
+    img_tags = Column(ARRAY(String), nullable=True)
 
-class PaintingDB(Model):
-    id = fields.IntField(pk=True)
-    title = fields.CharField(max_length=255)
-    artist_account = fields.ForeignKeyField("models.ArtistDB", related_name="paintings",
-                                            on_delete=fields.CASCADE)
-    img_url = fields.CharField(max_length=255)
-    year = fields.IntField(null=True)
-    description = fields.TextField(null=True)
-    medium = fields.CharField(max_length=100, null=True)
+    artist = relationship("Artist", back_populates="paintings")
+    likes = relationship("Likes", back_populates="painting", cascade="all, delete-orphan")
 
-    class Meta:
-        table = "paintings"
+    def __repr__(self):
+        return f"Painting(id={self.id}')"

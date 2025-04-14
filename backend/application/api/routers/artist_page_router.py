@@ -1,27 +1,46 @@
-from fastapi import APIRouter, HTTPException
-from backend.domain.models.artist_page import ArtistPage
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+
+from backend.application.auth.handler import get_current_account_by_login, \
+    get_current_account_or_none
+from backend.infrastructure.database.config import get_db
 from backend.infrastructure.database.repositories.artist_page_repository import ArtistPageRepository
+from backend.infrastructure.database.schemas.account_schemas import AccountFull
+from backend.infrastructure.database.schemas.artist_page_schemas import (ArtistPagePublic,
+                                                                         ArtistPagePublicWithPaintingsIdsAndUrl)
+from backend.application.utils.artist_page_converter import add_to_artist_page_painting_ids_and_url
 
 router = APIRouter()
 
 
-@router.get("/artist_pages/{artist_page_id}", response_model=ArtistPage)
-async def get_artist_page(artist_page_id: int):
-    artist_page_data = {
-        "id": artist_page_id,
-        "url": "https://artloom.ru/yuriromashov/",
-        "artist_id": 1,
-        "painting_ids": [1, 2, 3],
-    }
-    return ArtistPage(**artist_page_data)
+@router.get("/artist-pages/{id}", response_model=ArtistPagePublicWithPaintingsIdsAndUrl)
+async def get_artist_page(id: int, db: Session = Depends(get_db),
+                user: AccountFull = Depends(get_current_account_or_none)):
+    artist_page = ArtistPageRepository.get_artist_page_by_id(id, db)
+    if artist_page is None:
+        raise HTTPException(status_code=404, detail="ArtistPage not found")
 
+    artist_page = ArtistPagePublic.model_validate(artist_page)
+    return add_to_artist_page_painting_ids_and_url(artist_page, user, db)
 
+@router.get("/artist-pages/by_login/{login}", response_model=ArtistPagePublicWithPaintingsIdsAndUrl)
+async def get_artist_page(login: str, db: Session = Depends(get_db),
+                user: AccountFull = Depends(get_current_account_or_none)):
+    artist_page = ArtistPageRepository.get_artist_page_by_login(login, db)
+    if artist_page is None:
+        raise HTTPException(status_code=404, detail="ArtistPage not found")
 
-@router.post("/artist_pages/")
-async def create_artist_page(data: ArtistPage):
-    artist_page = await ArtistPageRepository.create_artist_page(
-        url=data.url,
-        artist_id=data.artist_id,
-        painting_ids=data.painting_ids
-    )
-    return {"id": artist_page.id, "url": artist_page.url, "artist_id": artist_page.artist_id}
+    artist_page = ArtistPagePublic.model_validate(artist_page)
+    return add_to_artist_page_painting_ids_and_url(artist_page, user, db)
+
+@router.delete("/artist_pages/")
+async def delete_artist_page(db: Session = Depends(get_db),
+                             user: AccountFull = Depends(get_current_account_by_login)):
+    artist_page_id = ArtistPageRepository.get_artist_page_by_artist_id(user.artist_id, db)
+    if artist_page_id is None:
+        raise HTTPException(status_code=404, detail="ArtistPage not found")
+    deleted = ArtistPageRepository.delete_artist_page(artist_page_id.id, db)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="ArtistPage not found")
+    return {"message": "ArtistPage deleted"}
+

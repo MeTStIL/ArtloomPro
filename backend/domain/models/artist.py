@@ -1,24 +1,21 @@
-from pydantic import BaseModel, Field
-from typing import Optional
-from tortoise.models import Model
-from tortoise import fields
+from sqlalchemy import Column, Integer, Text, VARCHAR, ForeignKey
+from sqlalchemy.orm import relationship
+from backend.infrastructure.database.db import Base
 
 
-class Artist(BaseModel):
-    id: int = Field(..., description='ID Художника', example=1)
-    name: str = Field(..., description='Имя Художника', example='Василий Васильевич Верещагин')
-    img_url: Optional[str] = Field(None, description='Аватар Художника', example='https://www.example.com/images/sample.jpg')
-    contacts: Optional[str] = Field(None, description='Контактная информация Художника', example='Telegram: @VasilyVereshchagin')
-    description: Optional[str] = Field(None, description='Информация о Художнике', example='Русский живописец, писатель, один из самых известных баталистов второй половины XIX века.')
-    subscribers_count: Optional[int] = None
+class Artist(Base):
+    __tablename__ = "artists"
 
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(VARCHAR(50), nullable=False)
+    img_path = Column(VARCHAR(255), nullable=True)
+    description = Column(Text, nullable=True)
+    subscribers_count = Column(Integer, default=0)
 
-class ArtistDB(Model):
-    id = fields.IntField(pk=True)
-    name = fields.CharField(max_length=255)
-    img_url = fields.CharField(max_length=255, null=True)
-    contacts = fields.TextField(null=True)
-    description = fields.TextField(null=True)
+    artist_page = relationship("ArtistPage", back_populates="artist", cascade="all, delete", uselist=False)
+    paintings = relationship("Painting", back_populates="artist", cascade="all, delete")
+    subscribers = relationship("Subscribes", back_populates="artist", cascade="all, delete-orphan")
+    account = relationship("Account", back_populates="artist", uselist=False)
 
-    class Meta:
-        table = "artists"
+    def __repr__(self):
+        return f"Artist(id={self.id}, name='{self.name}')"

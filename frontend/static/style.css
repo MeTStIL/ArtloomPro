@@ -147,6 +147,7 @@ header {
     color: #4063C4;
     font-size: 32px;
     font-weight: 700;
+    cursor: pointer;
 }
 
 .nav-menu {
@@ -167,7 +168,7 @@ header {
 }
 
 
-.nav-menu-loader {
+.nav-menu-button {
     margin-left: auto;
     display: none;
 }
@@ -404,7 +405,7 @@ footer {
         font-size: 22px;
     }
 
-    .nav-menu-loader {
+    .nav-menu-button {
         display: block;
     }
 
@@ -543,8 +544,6 @@ form {
     border-radius: 26px;
 }
 
-
-
 label {
     display: block;
     margin-bottom: 0;
@@ -602,7 +601,6 @@ input[type="file"] {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .popup.open {
@@ -662,6 +660,65 @@ input[type="file"] {
     /*box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.05);*/
 }
 
+.delete-btn:hover {
+    background-color: #d13333;
+    color: #f1f1f1;
+    border-color: #631717;
+}
+
+.delete-btn:active {
+    background-color: #912323;
+    color: #f1f1f1;
+    border-color: #631717;
+}
+
+.change-description-circle {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    cursor: pointer;
+}
+
+.change-description-circle img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
+.add-button-edit {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    cursor: pointer;
+    height: 50px;
+    width: 350px;
+    background-color: #F8F8F8;
+    margin-top: 35px;
+    border: 2px solid #808080;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Yandex Sans Display';
+    font-weight: bold;
+    color: #4e4e4e;
+    font-size: 18px;
+    transition-duration: 0.1s;
+}
+
+.add-button-edit:hover {
+    background-color: #efefef;
+}
+
+.add-button-edit a {
+    color: inherit;
+}
+
+.edit-img-btn {
+    width: 20px;
+    height: 20px;
+}
+
 .author-photo { 
     aspect-ratio: 1 / 1;
     overflow: hidden;
@@ -678,33 +735,54 @@ input[type="file"] {
     width: 60%;
 }
 
-div .loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+/* === Loader === */
+
+#overlay-l {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9000;
 }
 
-.loader {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 2s linear infinite;
+/* Основные стили для лоадера */
+#loader {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    font-size: 24px;
+    padding: 20px;
+    z-index: 9001;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-a {
+.loader-icon {
+    width: 60px;
+    height: 60px;
+    border: 10px solid #4063C4;
+    border-top: 10px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+a.description:visited {
+    text-decoration: none;
+    color: #4e4e4e;
+}
+
+a:not(.description) {
     color: #222;
 }
 
-a:hover {
+a:not(.description):hover {
     color: #4063C4;
 }
 
@@ -730,11 +808,6 @@ a:hover {
     background-color: #efefef;
     /*box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.05);*/
 }
-
-#editor {
-    display: none;
-}
-
 
 /* Отступ для основного контента, чтобы не перекрывался header */
 .main-page-content {
@@ -817,12 +890,27 @@ a:hover {
 .settings {
     cursor: pointer;
     position: absolute;
-    top: 20px;
-    left: 110px;
+    top: 10px;
+    left: 50px;
+    height: 50px;
+    width: 230px;
+    background-color: #F8F8F8;
+    margin-top: 35px;
+    border: 2px solid #808080;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    font-family: 'Yandex Sans Display';
+    font-weight: bold;
+    color: #4e4e4e;
+    font-size: 18px;
+    transition-duration: 0.1s;
 }
 
 .settings:hover {
-    color: #f6f6f6;
+    background-color: #efefef;
 }
 
 #change-author-name-btn {
@@ -842,29 +930,69 @@ a:hover {
     right: 7px;
     z-index: 1;
     position: absolute;
-    width: 20px;
+    width: 40px;
 }
 
 .change-painting-describe-btn {
-    top: 32px;
-    right: 5px;
-    z-index: 1;
-    position: absolute;
-    width: 22px;
-}
-
-.like-painting-btn {
-    top: 5px;
+    top: 50px;
     right: 7px;
     z-index: 1;
     position: absolute;
-    width: 25px;
+    width: 40px;
 }
 
-.description {
+.like-painting-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 7px;
+    right: 25px;
+    z-index: 1;
+    position: absolute;
+    width: 30px;
+    opacity: 0;
+    transition-duration: 0.3s;
+}
+
+.author-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 7px;
+    right: 10px;
+    z-index: 1;
+    position: absolute;
+    opacity: 0;
+    transition-duration: 0.3s;
+}
+
+.photo:hover .author-link {
+    opacity: 1;
+}
+
+.author-link a {
     font-family: 'Yandex Sans Display';
-    font-weight: normal;
-    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    margin-right: 5px;
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.48);
+    border-radius: 10%;
+}
+
+.like-painting-btn p {
+    font-family: 'Yandex Sans Display';
+    font-weight: bold;
+    color: #fff;
+    margin-right: 5px;
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.48);
+    border-radius: 10%;
+}
+
+.photo:hover .like-painting-btn {
+    transition-duration: 0.3s;
+    opacity: 1;
 }
 
 .delete-page-btn {
@@ -880,10 +1008,219 @@ a:hover {
     margin: 0 auto;
 }
 
-.delete-page-btn:hover {
-    background-color: #ff6060;
+.liked img{
+    content: url("../static/root/redlike.svg");
 }
 
-.delete-page-btn:active {
-    background-color: #943a3a;
+.subscribed img{
+    content: url("../static/root/redsub.svg");
 }
+
+.avatar {
+    margin: 25px 0;
+    display: grid;
+}
+
+.avatar img {
+    width: 230px;
+    object-fit: cover;
+    aspect-ratio: 1;
+    border: 2px solid #808080;
+    border-radius: 7px;
+}
+
+.hidden {
+    display: none;
+}
+
+.logout {
+    width: 20px;
+    height: 20px;
+}
+
+.logout img{
+    margin-left: 4px;
+    margin-top: 3px;
+    height: 1em;
+}
+
+.author-link a:hover {
+    color: white;
+}
+
+.photo {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.photo.showItem {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.abstract {
+    opacity: 0.8;
+    max-height: 100%;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.tooltip .tooltiptext {
+    font-family: 'Yandex Sans Display';
+    font-size: 18px;
+    visibility: hidden;
+    width: 150px;
+    background-color: #f0f0f0;
+    color: black;
+    text-align: center;
+    border: 3px solid #cacaca;
+    border-radius: 15px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1000;
+    top: 75%;
+    left: 46%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 80%;
+}
+
+.alert {
+    z-index: 1003;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 100px;
+    left: calc(50% - 125px);
+    width: 250px;
+    opacity: 1;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border: black 1px solid;
+    transition-duration: 0.3s;
+    transform-style: flat;
+}
+
+.hidden-alert {
+    opacity: 0;
+    top: calc(-200px);
+}
+
+.input-file-button {
+    width: 50%;
+    text-align: center;
+    display: inline-block;
+    padding: 10px 16px;
+    color: white;
+    background-color: #007bff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.custom-file-input {
+    display: none;
+}
+
+.file-name {
+    margin-left: 12px;
+    font-style: italic;
+    color: #555;
+}
+
+.input-file-button.default {
+    background-color: #007bff;
+}
+
+.input-file-button.selected {
+    background-color: green;
+}
+
+.index-button{
+    font-family:'Yandex Sans Display';
+    font-weight:bold;
+    font-size:24px;
+    height:60px;
+    padding:10px 15px;
+    margin:40px 20px 60px 0;
+    border-radius:15px;
+
+    --accent:#3451A8;
+    position:relative;
+    overflow:hidden;
+    background:#fff !important;
+    color:#000;
+    border:3px solid var(--accent);
+    transition:color .35s;
+}
+
+.index-button.index-first{
+    --accent:#7434a8;
+}
+
+.index-button::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:var(--accent);
+    transform:translateX(-100%);
+    transition:transform .35s ease;
+    z-index:-1;
+}
+
+.index-button:hover::before{
+    transform:translateX(0);
+}
+
+.index-button:hover{
+    color:#fff;
+    background:transparent !important;
+}
+
+
+/* === HERO-текст с анимированным градиентом === */
+.index-text{
+    font-family:'Yandex Sans Display';
+    font-weight:850;
+    font-size:40px;
+    line-height:1.15;
+    margin:20px 0 0 0;
+    width:auto !important;          /* снимаем прежние 70 % */
+    max-width:900px;
+
+    background:linear-gradient(90deg,#56bdf5,#4d57c6,#8e48d6,#d44de0,#56bdf5);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+            background-clip:text;
+    -webkit-text-fill-color:transparent; /* текст берёт цвет из градиента */
+    color:transparent;
+    animation:textGradient 6s linear infinite;
+}
+
+@keyframes textGradient{
+    0%  {background-position: 0 50%;}
+    100%{background-position:200% 50%;}
+}
+
+/* чуть меньше на телефонах */
+@media(max-width:768px){
+    .index-text{font-size:36px;}
+}
+

@@ -14,13 +14,23 @@ async def search_paintings(
         db: Session = Depends(get_db)
 ):
     text_embedding = get_text_embedding(search_query.text)
-
-    search_result = SearchRepository.search_painting_ids(
+    search_result_by_desc = SearchRepository.search_painting_ids_by_description(search_query.text,
+                                                                                search_query.limit // 2,
+                                                                                db)
+    search_result_by_img = SearchRepository.search_painting_ids_by_image(
         text_embedding,
-        search_query.limit, db
+        search_query.limit,
+        db
     )
 
-    return search_result
+    for painting_id in search_result_by_img:
+        if painting_id in search_result_by_desc:
+            continue
+        search_result_by_desc.append(painting_id)
+        if len(search_result_by_desc) == search_query.limit:
+            break
+
+    return search_result_by_desc
 
 @router.post("/random-paintings/", response_model=list[int])
 async def random_paintings(

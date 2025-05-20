@@ -4,49 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="../static/root/favicon.ico">
     <title>ARTLOOM</title>
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!--    <script type="module" src="../static/js/checkAuth.js"></script>-->
-    <script type="module" src="../static/js/error-handler.js"></script>
-    <script type="module" src="../static/js/artist-page.js" onerror="handleScriptError()"></script>
+    <script type="module" src="../static/js/utils/errorHandler.js"></script>
+    <script type="module" src="../static/js/pages/artistPage.js" onerror="handleScriptError()"></script>
 </head>
 <body>
-<div id="loader" class="loader"></div>
-<div id="content">
     <header>
         <div class="nav no-select">
             <span class="title no-select">ARTLOOM</span>
             <span class="nav-menu no-select">
-                <span class="menu-item no-select"><a href="/">главная</a></span>
-                <span class="menu-item no-select" id="pc-username"><a href="/login">вход</a></span>
-            </span>
-            <span class="nav-menu-loader no-select">
-                <img class="no-select" id="menu-icon" src="{{ url_for('static', filename='root/menu.svg') }}" alt="">
-            </span>
+                    <span class="menu-item no-select"><a href="/">главная</a></span>
+                    <span class="menu-item no-select"><a href="/search">поиск</a></span>
+                    <span class="menu-item no-select" id="pc-username"><a href="/login">вход</a></span>
+                </span>
+            <span class="nav-menu-button no-select">
+                    <img class="no-select" id="menu-icon" src="{{ url_for('static', filename='root/menu.svg') }}"
+                         alt="">
+                </span>
         </div>
     </header>
 
     <div class="more no-select" id="more">
         <div class="container no-select">
             <div class="menu-item no-select"><a href="/">главная</a></div>
+            <div class="menu-item no-select"><a href="/search">поиск</a></div>
             <div class="menu-item vertical-last no-select" id="mobile-username"><a href="/login">вход</a></div>
         </div>
     </div>
     <div id="main-picture" class="main-picture-container no-select">
         <div class="flex-container">
+            <div class="add-button-edit hidden" id="editor-open">
+                <a class="description" id="editor">
+                    <span>Перейти в режим редактирования </span>
+                    <img class="edit-img-btn" src="../static/root/blackchange3.svg" alt="">
+                </a>
+            </div>
             <div class="main-info">
-                <div id="author-name" class="main-author-name">Юрий Ромашов</div>
+                <div id="author-name" class="main-author-name">Пользователь</div>
                 <div class="main-links">
                     <div class="link like">
                         <img src="../static/root/like.svg" alt="">
                         <div id="likes" class="text like-text">0</div>
                     </div>
-                    <div class="link repost">
-                        <img src="../static/root/repost.svg" alt="">
-                        <div class="text repost-text">Поделиться</div>
+                    <div class="link repost" id="repost-btn">
+                        <img src="../static/root/repost.svg" alt="" id="share-img">
+                        <div class="text repost-text" id="share-btn">Поделиться</div>
                     </div>
-                    <div class="link play">
+                    <div class="link play" id="watch-btn">
                         <img src="../static/root/play.svg" alt="">
                         <div class="text play-text">Смотреть</div>
                     </div>
@@ -59,19 +67,16 @@
     </div>
     <div class="container no-select">
         <div class="block no-select">
-            <a class="description" id="editor">Перейти в режим редактирования</a>
-            <div class="gallery-title no-select">Галерея</div>
-            <div class="gallery-caption no-select">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore
-                facere quia perferendis saepe, distinctio sint sapiente cupiditate tenetur sequi inventore quae est!
-                Porro, labore magnam natus culpa recusandae itaque fugiat?
-            </div>
+            <div class="gallery-title no-select hidden" id="description-section">О себе</div>
+            <div class="gallery-caption no-select hidden" id="artist-description"></div>
+            <div class="gallery-title no-select" id="main-gallery">Галерея</div>
             <div id="gallery" class="gallery no-select"></div>
         </div>
     </div>
     <footer>
         <div class="container no-select" id="contacts">
             <div class="links no-select"></div>
-            <div class="copy no-select">© 2025 ARTLOOM. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
+            <div class="copy no-select"></div>
         </div>
     </footer>
     <div class="overlay no-select" id="overlay">
@@ -87,21 +92,11 @@
                 <label for="input-photo">Файл</label>
                 <input id="input-photo" type="file" multiple accept="image/png, image/jpeg, image/jpg" name="file">
                 <br><br>
-                <label for="photo-desc">Описание фото</label>
+                <label for="photo-desc">Описание картины</label>
                 <textarea id="photo-desc" name="popup-desc" placeholder="Введите описание"></textarea>
                 <button type="submit">ЗАГРУЗИТЬ</button>
             </form>
         </div>
     </div>
-</div>
-<script>
-    window.onload = function () {
-        const loader = document.getElementById('loader');
-        const content = document.getElementById('content');
-
-        loader.style.display = 'none';
-        content.style.display = 'block';
-    };
-</script>
 </body>
 </html>

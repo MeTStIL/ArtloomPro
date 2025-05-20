@@ -13,7 +13,9 @@ from backend.application.api.routers import search_router
 from backend.application.api.routers import likes_router
 from backend.application.api.routers import subscribes_router
 
-app = FastAPI()
+from backend.application.services.ping_clarifai_service import lifespan, ping_clarifai_model
+
+app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
 
 app.add_middleware(
     CORSMiddleware,

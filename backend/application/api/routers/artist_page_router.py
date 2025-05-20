@@ -5,6 +5,7 @@ from backend.application.auth.handler import get_current_account_by_login, \
     get_current_account_or_none
 from backend.infrastructure.database.config import get_db
 from backend.infrastructure.database.repositories.artist_page_repository import ArtistPageRepository
+from backend.infrastructure.database.repositories.artist_repository import ArtistRepository
 from backend.infrastructure.database.schemas.account_schemas import AccountFull
 from backend.infrastructure.database.schemas.artist_page_schemas import (ArtistPagePublic,
                                                                          ArtistPagePublicWithPaintingsIdsAndUrl)
@@ -36,11 +37,11 @@ async def get_artist_page(login: str, db: Session = Depends(get_db),
 @router.delete("/artist_pages/")
 async def delete_artist_page(db: Session = Depends(get_db),
                              user: AccountFull = Depends(get_current_account_by_login)):
-    artist_page_id = ArtistPageRepository.get_artist_page_by_artist_id(user.artist_id, db)
-    if artist_page_id is None:
-        raise HTTPException(status_code=404, detail="ArtistPage not found")
-    deleted = ArtistPageRepository.delete_artist_page(artist_page_id.id, db)
+
+    """Тут теперь удаление не artist_page, а самого artist. При удалении страницы каскадно не будет ставиться id в null,
+    это связано с реализацией самой алхимии. При удалении артиста всё норм, могу потом подробнее расписать"""
+    deleted = ArtistRepository.delete_artist(user.artist_id, db)
     if not deleted:
-        raise HTTPException(status_code=404, detail="ArtistPage not found")
+        raise HTTPException(status_code=404, detail="Artist not found")
     return {"message": "ArtistPage deleted"}
 

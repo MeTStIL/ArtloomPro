@@ -66,7 +66,7 @@ def _send_message_to_mistral(prompt, temperature=0.7, max_tokens=200):
         try:
             response = requests.post(MISTRAL_API_URL, headers=headers, json=data)
             if response.status_code == 200:
-                return response.json().get_artist_by_id("choices")[0].get_artist_by_id("message").get_artist_by_id("content")
+                return response.json().get("choices")[0].get("message").get("content")
             sleep(0.1)
         except Exception as e:
             sleep(0.1)

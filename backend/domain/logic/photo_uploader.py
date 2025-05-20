@@ -1,11 +1,13 @@
 import boto3
 import uuid
+import io
 from datetime import datetime
 from botocore.exceptions import NoCredentialsError, ClientError
 from starlette.responses import JSONResponse
 from fastapi import UploadFile, File, HTTPException
 from backend.config import YC_STORAGE_ENDPOINT, YC_BUCKET_NAME
 from backend.api_keys import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+from PIL import Image
 
 
 def get_s3_client():
@@ -17,13 +19,34 @@ def get_s3_client():
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY
     )
 
+
 def upload_photo_to_yc(file: UploadFile = File(...)):
     s3 = get_s3_client()
 
     try:
-        file_extension = file.filename.split('.')[-1]
-        unique_filename = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex}.{file_extension}"
-        s3.upload_fileobj(file.file, YC_BUCKET_NAME, unique_filename)
+        unique_filename = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex}.jpg"
+
+        image = Image.open(file.file)
+        if image.mode in ("RGBA", "P"):
+            image = image.convert("RGB")
+
+        img_byte_arr = io.BytesIO()
+        image.save(
+            img_byte_arr,
+            format="JPEG",
+            quality=100,
+        )
+        img_byte_arr.seek(0)
+
+        s3.upload_fileobj(
+            img_byte_arr,
+            YC_BUCKET_NAME,
+            unique_filename,
+            ExtraArgs={
+                "ContentType": "image/jpeg",
+                "ContentDisposition": "inline"
+            }
+        )
 
         return JSONResponse(
             status_code=200,
@@ -47,8 +70,9 @@ def upload_photo_to_yc(file: UploadFile = File(...)):
             detail=f"Error uploading file: {str(e)}"
         )
 
+
 def delete_photo_from_yc(img_path):
     s3 = get_s3_client()
     filename = img_path.split('/')[-1]
-    forDeletion = [{'Key': f'{filename}'}]
+    forDeletion = [{'Key': filename}]
     s3.delete_objects(Bucket=YC_BUCKET_NAME, Delete={'Objects': forDeletion})

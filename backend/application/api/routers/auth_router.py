@@ -15,7 +15,7 @@ from backend.settings import ACCESS_TOKEN_EXPIRE_MINUTES
 
 router = APIRouter()
 
-@router.post("/auth", response_model=Token)
+@router.post("/auth/", response_model=Token)
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db)):
     user = AccountRepository.get_account_full_info_by_login(form_data.username, db)
     if not user or not verify_password(form_data.password, user.hashed_password):

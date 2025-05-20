@@ -16,6 +16,7 @@ class PaintingPublic(PaintingCreate):
 
 class PaintingPublicWithLikesCount(PaintingPublic):
     likes_count: int
+    artist_page_url: str
 
 class PaintingUpdate(BaseSchema):
     description: Optional[str] = None

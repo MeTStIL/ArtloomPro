@@ -8,7 +8,10 @@ from backend.domain.models.likes import Likes
 class LikesRepository:
     @staticmethod
     def get_liked_painting_ids(account_id: int, db: Session) -> List[int]:
-        liked_paintings = db.query(Likes).filter(Likes.account_id == account_id).all()
+        liked_paintings = (db.query(Likes)
+                           .filter(Likes.account_id == account_id)
+                           .order_by(Likes.painting_id.desc())
+                           .all())
         return [like.painting_id for like in liked_paintings]
 
     @staticmethod

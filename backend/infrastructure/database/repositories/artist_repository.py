@@ -33,7 +33,7 @@ class ArtistRepository:
         return False
 
     @staticmethod
-    def update_artist(artist_id: int, new_artist_dict: dict, db: Session) -> ArtistPublic | None:
+    def update_artist(artist_id: int, new_artist_dict: dict, db: Session) -> Optional[ArtistPublic]:
         artist = db.query(Artist).filter_by(id=artist_id).first()
         if not artist:
             return None
@@ -46,7 +46,7 @@ class ArtistRepository:
         return ArtistPublic.model_validate(artist)
 
     @staticmethod
-    def get_artist_by_account_id(account_id: int, db: Session) -> ArtistPublic | None:
+    def get_artist_by_account_id(account_id: int, db: Session) -> Optional[ArtistPublic]:
         artist = db.query(Account).filter_by(id=account_id).first().artist
         if not artist:
             return None

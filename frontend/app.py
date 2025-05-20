@@ -3,9 +3,12 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 @app.route('/')
-# @login_required
 def index():
     return render_template("index.html")
+
+@app.route('/search')
+def search():
+    return render_template("search-page.html")
 
 @app.route('/<string:login>')
 def artist_page(login):
@@ -30,7 +33,7 @@ def login():
 
 
 def main():
-    app.run(debug=True)
+    app.run(debug=False)
 
 if __name__ == '__main__':
     main()

@@ -14,9 +14,9 @@ class ArtistCreate(BaseSchema):
 class ArtistPublic(ArtistCreate):
     id: int
 
-class ArtistPublicWithSubsCountAndArtistPageId(ArtistPublic):
+class ArtistPublicWithSubsCountAndArtistPageUrl(ArtistPublic):
     subscribers_count: int
-    artist_page_id: int
+    artist_page_url: str
 
 class ArtistUpdate(BaseSchema):
     name: Optional[str] = None

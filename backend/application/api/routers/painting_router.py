@@ -16,12 +16,6 @@ from backend.application.utils.painting_converter import add_to_painting_likes_c
 router = APIRouter(prefix="/paintings")
 
 
-@router.get("/", response_model=List[PaintingPublicWithLikesCount])
-async def get_paintings(db: Session = Depends(get_db)):
-    paintings = await PaintingRepository.get_all_paintings(db)
-    return [add_to_painting_likes_count(painting, db) for painting in paintings]
-
-
 @router.get("/{painting_id}", response_model=PaintingPublicWithLikesCount)
 async def get_painting_by_id(painting_id: int, db: Session = Depends(get_db)):
     painting = PaintingRepository.get_painting_by_id(painting_id, db)

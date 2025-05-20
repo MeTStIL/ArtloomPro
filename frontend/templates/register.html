@@ -3,46 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/root/favicon.ico">
+    <title>ARTLOOM - Регистрация</title>
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style_reg.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
     <title>Регистрация аккаунта</title>
-    <script type="module" src="../static/js/register.js" onerror="handleScriptError()"></script>
+    <script type="module" src="../static/js/pages/registerPage.js" onerror="handleScriptError()"></script>
 </head>
 <body>
-    <header>
-        <div class="nav no-select">
-            <span class="title no-select">ARTLOOM</span>
-            <span class="nav-menu no-select">
+<header>
+    <div class="nav no-select">
+        <span class="title no-select">ARTLOOM</span>
+        <span class="nav-menu no-select">
                 <span class="menu-item no-select"><a href="/">главная</a></span>
-                <span class="menu-item no-select"><a href="/login">вход</a></span>
+                <span class="menu-item no-select"><a href="/search">поиск</a></span>
+                <span class="menu-item no-select" id="pc-username"><a href="/login">вход</a></span>
             </span>
-            <span class="nav-menu-loader no-select">
-                <img class="no-select" id="menu-icon" src="{{ url_for('static', filename='root/menu.svg') }}" alt="">
+        <span class="nav-menu-button no-select">
+                <img class="no-select" id="menu-icon" src="{{ url_for('static', filename='root/menu.svg') }}"
+                     alt="">
             </span>
-        </div>
-    </header>
-    <div class="container-form">
-        <h1>Регистрация</h1>
-        <form action="#" method="post">
-            <div class="input-group">
-                <input type="text" id="name" name="name" placeholder="Введите ваш логин" required>
-            </div>
+    </div>
+</header>
 
-            <div class="input-wrapper">
-                <input class="input avatar" type="file" id="avatar" accept="image/png, image/jpeg, image/jpg" name="avatar" multiple>
-                <label for="avatar" class="input-file-button">
-                   Выберите аватар
-                </label>
-             </div>
-            <div class="input-group">
-                <input type="password" id="password" name="password" placeholder="Введите пароль" required>
-            </div>
-            <div class="input-group">
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Подтвердите пароль" required>
-            </div>
-            <button type="submit">Зарегистрироваться</button>
-            <p class="create-account"><a href="/login"><b>Уже есть аккаунт? Войдите</b></a></p>
-        </form>
+<div class="more no-select" id="more">
+    <div class="container no-select">
+        <div class="menu-item no-select"><a href="/">главная</a></div>
+        <div class="menu-item no-select"><a href="/search">поиск</a></div>
+        <div class="menu-item vertical-last no-select" id="mobile-username"><a href="/login">вход</a></div>
+    </div>
+</div>
+
+<div class="container wrapper registration-field">
+    <h1>Регистрация</h1>
+    <form action="#" method="post">
+        <div class="input-group">
+            <input type="text" id="name" name="name" placeholder="Введите ваш логин" required>
+        </div>
+
+        <div class="input-wrapper">
+            <label for="avatar" class="input-file-button">
+                Выберите аватар
+            </label>
+            <span id="avatar-filename" class="file-name">Файл не выбран</span>
+            <input class="input avatar custom-file-input" type="file" id="avatar"
+                   accept="image/*" name="avatar" multiple>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" name="password" placeholder="Введите пароль" required>
+        </div>
+        <div class="input-group">
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Подтвердите пароль"
+                   required>
+        </div>
+        <button type="submit">Зарегистрироваться</button>
+        <p class="create-account" id="create-account-btn" style="cursor: pointer">
+            <a href="/login"><b>Уже есть аккаунт? Войдите</b></a>
+        </p>
+    </form>
     <!--<div class="social-login">
             <p>Регистрация с помощью:</p>
             <div class="social-buttons">
@@ -51,12 +70,15 @@
                 <button class="telegram">Telegram</button>
             </div>
         </div>-->
+</div>
+<div class="alert hidden-alert">
+    <div class="alert-content"></div>
+</div>
+<footer>
+    <div class="container-footer no-select" id="contacts">
+        <div class="links no-select"></div>
+        <div class="copy no-select"></div>
     </div>
-    <footer>
-        <div class="container-footer no-select" id="contacts">
-            <div class="links no-select"></div>
-            <div class="copy no-select">© 2025  ARTLOOM. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
-        </div>
-    </footer>
+</footer>
 </body>
 </html>

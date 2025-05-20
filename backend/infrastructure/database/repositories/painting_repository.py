@@ -79,7 +79,7 @@ class PaintingRepository:
         return painting
 
     @staticmethod
-    def get_artist_id_by_painting_id(painting_id: int, db: Session) -> int | None:
+    def get_artist_id_by_painting_id(painting_id: int, db: Session) -> Optional[int]:
         painting = db.query(Painting).filter(Painting.id == painting_id).first()
         if not painting:
             return None

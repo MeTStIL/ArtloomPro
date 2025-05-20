@@ -4,150 +4,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ARTLOOM</title>
+    <link rel="icon" href="../static/root/favicon.ico">
+    <title>ARTLOOM - Режим редактирования</title>
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!--    <script type="module" src="../static/js/checkAuth.js"></script>-->
-    <script type="module" src="../static/js/error-handler.js"></script>
+    <script type="module" src="../static/js/utils/errorHandler.js"></script>
 </head>
-<script type="module" src="../static/js/artist-page-editor.js" onerror="handleScriptError()"></script>
+<script type="module" src="../static/js/pages/artistPageEditor.js" onerror="handleScriptError()"></script>
 <body>
-<div id="loader" class="loader"></div>
-<div id="content">
-    <header>
-        <div class="nav no-select">
-            <span class="title no-select">ARTLOOM</span>
-            <span class="nav-menu no-select">
+<header>
+    <div class="nav no-select">
+        <span class="title no-select">ARTLOOM</span>
+        <span class="nav-menu no-select">
                 <span class="menu-item no-select"><a href="/">главная</a></span>
+                <span class="menu-item no-select"><a href="/search">поиск</a></span>
                 <span class="menu-item no-select" id="pc-username"><a href="/login">вход</a></span>
             </span>
-            <span class="nav-menu-loader no-select">
-                <img class="no-select" id="menu-icon" src="{{ url_for('static', filename='root/menu.svg') }}" alt="">
+        <span class="nav-menu-button no-select">
+                <img class="no-select" id="menu-icon" src="{{ url_for('static', filename='root/menu.svg') }}"
+                     alt="">
             </span>
-        </div>
-    </header>
+    </div>
+</header>
 
-    <div class="more no-select" id="more">
-        <div class="container no-select">
-            <div class="menu-item no-select"><a href="/">главная</a></div>
-            <div class="menu-item vertical-last no-select" id="mobile-username"><a href="/login">вход</a></div>
-        </div>
-    </div>
-    <div id="main-picture" class="main-picture-container no-select">
-        <div class="flex-container">
-            <div class="settings" id="change-background-btn">
-                Изменить фон
-            </div>
-            <div class="main-info">
-                <div class="main-author-name">
-                    <span id="author-name">Псевдоним</span>
-                    <span id="change-author-name-btn"><img src="../static/root/change.svg" alt=""></span>
-                </div>
-                <div class="main-links">
-                    <div class="link like">
-                        <img src="../static/root/like.svg" alt="">
-                        <div id="likes" class="text like-text">0</div>
-                    </div>
-                    <div class="link repost">
-                        <img src="../static/root/repost.svg" alt="">
-                        <div class="text repost-text">Поделиться</div>
-                    </div>
-                    <div class="link play">
-                        <img src="../static/root/play.svg" alt="">
-                        <div class="text play-text">Смотреть</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="flex-container-transition">
-            <div class="border-transition"></div>
-        </div>
-    </div>
+<div class="alert hidden-alert">
+    <div class="alert-content"></div>
+</div>
+
+<div class="more no-select" id="more">
     <div class="container no-select">
-        <div class="block no-select">
-            <a class="description" id="editor">Выйти из режима редактирования</a>
-            <div class="gallery-title no-select">Галерея</div>
-            <button id="change-painting-describe-btn" style="margin-bottom: 10px;">
-                Изменить описание «Галереи»
-            </button>
-            <div class="gallery-caption no-select">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore facere quia perferendis saepe, distinctio sint sapiente cupiditate tenetur sequi inventore quae est! Porro, labore magnam natus culpa recusandae itaque fugiat?</div>
-            <div id="gallery" class="gallery no-select">
-                <div class="first">
-                    <div class="plus-container">
-                        <img src="../static/root/plus.svg" alt="">
-                    </div>
-                </div>
+        <div class="menu-item no-select"><a href="/">главная</a></div>
+        <div class="menu-item no-select"><a href="/search">поиск</a></div>
+        <div class="menu-item vertical-last no-select" id="mobile-username"><a href="/login">вход</a></div>
+    </div>
+</div>
 
+<div id="main-picture" class="main-picture-container no-select">
+    <div class="flex-container">
+        <div class="settings" id="change-background-btn">
+            <span>Изменить фон</span>
+            <img class="edit-img-btn" src="../static/root/blackchange3.svg" alt="">
+        </div>
+        <div class="add-button-edit" id="editor-exit">
+            <a class="description" id="editor">
+                <span>Выйти из режима редактирования </span>
+                <img class="edit-img-btn" src="../static/root/blackchange3.svg" alt="">
+            </a>
+        </div>
+        <div class="main-info">
+            <div class="main-author-name">
+                <span id="author-name">Псевдоним</span>
+                <span id="change-author-name-btn"><img src="../static/root/change.svg" alt=""></span>
+            </div>
+            <div class="main-links">
+                <div class="link like">
+                    <img src="../static/root/like.svg" alt="">
+                    <div id="likes" class="text like-text">0</div>
+                </div>
+                <div class="link repost" id="repost-btn">
+                    <img src="../static/root/repost.svg" alt="" id="share-img">
+                    <div class="text repost-text" id="share-btn">Поделиться</div>
+                </div>
+                <div class="link play" id="watch-btn">
+                    <img src="../static/root/play.svg" alt="">
+                    <div class="text play-text">Смотреть</div>
+                </div>
             </div>
         </div>
     </div>
-    <footer>
-        <div class="container no-select" id="contacts">
-            <div class="links no-select"></div>
-            <div class="copy no-select">© 2025  ARTLOOM. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
-        </div>
-    </footer>
-    <div class="overlay no-select" id="overlay">
-        <img class="no-select" src="" alt="" id="fullImage">
-        <div class="image-description no-select" id="imageDescription"></div>
+    <div class="flex-container-transition">
+        <div class="border-transition"></div>
     </div>
-    <div class="popup" id="add-photo-popup">
-        <div class="popup-content">
-            <form enctype="multipart/form-data" id="popup-form">
-                <input type="hidden" name="album_id" value="">
-                <input type="hidden" name="section_id1" value="">
-                <input type="hidden" name="redirect" value="">
-                <label for="input-photo">Файл</label>
-                <input id="input-photo" type="file" multiple accept="image/png, image/jpeg, image/jpg" name="file">
-                <br><br>
-                <label for="photo-desc">Описание фото</label>
-                <textarea id="photo-desc" name="popup-desc" placeholder="Введите описание"></textarea>
-                <button type="submit">ЗАГРУЗИТЬ</button>
-            </form>
+</div>
+<div class="container no-select">
+    <div class="block no-select">
+
+
+        <div class="add-button delete-btn" id="delete-artist-page-btn">
+            Удалить страницу
         </div>
-    </div>
 
-    <div class="popup" id="change-background-popup">
-        <div class="popup-content">
-            <form id="change-background-form">
-               <label for="new-background">Новый задний фон</label>
-                <input type="file" name="new-background" id="new-background">
-
-                <button type="submit">Изменить задний фон</button>
-            </form>
+        <div class="gallery-title no-select hidden" id="description-section">
+            <span class="change-description-circle" id="change-description-btn">О себе<img src="../static/root/blackchange3.svg" alt=""></span>
         </div>
-    </div>
+        <div class="gallery-caption no-select hidden" id="artist-description"></div>
+        <div class="gallery-title no-select">Галерея</div>
+        <div id="gallery" class="gallery no-select">
+            <div class="first" id="addPhotoButton">
+                <div class="plus-container">
+                    <img src="../static/root/plus.svg" alt="">
+                </div>
+            </div>
 
-    <div class="popup" id="change-author-name-popup">
-        <div class="popup-content">
-            <form id="change-author-name-form">
-                <label for="new-author-name">Новый псевдоним</label>
-                <input type="text" name="new-author-name" id="new-author-name" placeholder="">
-
-                <button type="submit">Изменить псевдоним</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="popup" id="change-painting-describe-popup">
-        <div class="popup-content">
-            <form id="change-painting-describe-form">
-                <label for="new-painting-describe">Новое описание картины</label>
-                <textarea name="new-painting-describe" id="new-painting-describe"></textarea>
-
-                <button type="submit">Изменить описание картины</button>
-            </form>
         </div>
     </div>
 </div>
-<script>
-    window.onload = function() {
-        const loader = document.getElementById('loader');
-        const content = document.getElementById('content');
+<footer>
+    <div class="container no-select" id="contacts">
+        <div class="links no-select"></div>
+        <div class="copy no-select"></div>
+    </div>
+</footer>
+<div class="overlay no-select" id="overlay">
+    <img class="no-select" src="" alt="" id="fullImage">
+    <div class="image-description no-select" id="imageDescription"></div>
+</div>
+<div class="popup" id="add-photo-popup">
+    <div class="popup-content">
+        <form enctype="multipart/form-data" id="popup-form">
+            <input type="hidden" name="album_id" value="">
+            <input type="hidden" name="section_id1" value="">
+            <input type="hidden" name="redirect" value="">
+            <label for="input-photo">Файл</label>
+            <input id="input-photo" type="file" multiple accept="image/png, image/jpeg, image/jpg" name="file">
+            <br><br>
+            <label for="photo-desc">Описание картины</label>
+            <textarea id="photo-desc" name="popup-desc" placeholder="Введите описание"></textarea>
+            <button class="loadButton" type="submit">ЗАГРУЗИТЬ</button>
+        </form>
+    </div>
+</div>
 
-        loader.style.display = 'none';
-        content.style.display = 'block';
-    };
-</script>
+<div class="popup" id="change-background-popup">
+    <div class="popup-content">
+        <form id="change-background-form">
+            <label for="new-background">Новый задний фон</label>
+            <input type="file" name="new-background" id="new-background" accept="image/*" >
+
+            <button class="loadButton" type="submit">Изменить задний фон</button>
+        </form>
+    </div>
+</div>
+
+<div class="popup" id="change-author-name-popup">
+    <div class="popup-content">
+        <form id="change-author-name-form">
+            <label for="new-author-name">Новый псевдоним</label>
+            <input type="text" name="new-author-name" id="new-author-name" placeholder="">
+
+            <button class="loadButton" type="submit">Изменить псевдоним</button>
+        </form>
+    </div>
+</div>
+
+<div class="popup" id="change-painting-describe-popup">
+    <div class="popup-content">
+        <form id="change-painting-describe-form">
+            <label for="new-painting-describe">Новое описание картины</label>
+            <textarea name="new-painting-describe" id="new-painting-describe"></textarea>
+            <button class="loadButton" type="submit">Изменить описание картины</button>
+        </form>
+    </div>
+</div>
+
+<div class="popup" id="change-description-popup">
+    <div class="popup-content">
+        <form id="change-description-form">
+            <label for="new-description">Новое описание</label>
+            <textarea id="new-description"></textarea>
+            <button class="loadButton" type="submit">Изменить описание</button>
+        </form>
+    </div>
+
+</div>
+
+
+
+<div class="popup" id="delete-artist-page-popup">
+    <div class="popup-content">
+        <form id="delete-artist-page-popup">
+            <label for="delete-popup">Точно ли вы хотите удалить страницу?</label>
+
+            <button class="loadButton" type="submit">Да</button>
+            <button class="loadButton" type="submit">Нет</button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

@@ -154,6 +154,5 @@ class AccountRepository:
             return None
 
         account = db.query(Account).filter_by(artist_id=artist_page.artist_id).first()
-        print(AccountPublic.model_validate(account).login)
 
         return AccountPublic.model_validate(account) if account else None

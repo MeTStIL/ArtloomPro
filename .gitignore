@@ -178,3 +178,6 @@ cython_debug/
 
 /alembic.ini
 /nginx/ssl/
+/backend/domain/logic/test_backgrounds1/
+/backend/domain/logic/test_avatars/
+/backend/domain/logic/test_backgrounds/

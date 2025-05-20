@@ -2,10 +2,11 @@ from typing import Optional, List
 
 from sqlalchemy.orm import Session, joinedload
 
-from backend.config import site_base_url
+from backend.config import SITE_BASE_URL
 from backend.domain.models.account import Account
 from backend.domain.models.artist import Artist
 from backend.domain.models.artist_page import ArtistPage
+from backend.domain.models.painting import Painting
 from backend.infrastructure.database.schemas.artist_page_schemas import ArtistPagePublic
 
 
@@ -59,10 +60,13 @@ class ArtistPageRepository:
 
     @staticmethod
     def get_painting_ids(artist_id: int, db: Session) -> List[int]:
-        paintings = db.query(Artist).filter_by(id=artist_id).first().paintings
+        paintings = (db.query(Painting)
+                     .filter(Painting.artist_id == artist_id)
+                     .order_by(Painting.id.desc())
+                     .all())
         return [painting.id for painting in paintings]
 
     @staticmethod
     def get_url_by_artist_id(artist_id: int, db: Session) -> str:
         artist = db.query(Artist).filter_by(id=artist_id).first()
-        return f"{site_base_url}/{artist.account.login}"
+        return f"{SITE_BASE_URL}/{artist.account.login}"

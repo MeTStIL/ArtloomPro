@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/root/favicon.ico">
+    <title>ARTLOOM - Поиск</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script type="module" src="../static/js/utils/errorHandler.js"></script>
+</head>
+<body>
+<div id="overlay-l"></div>
+<div id="loader">
+    <div class="loader-icon"></div>
+</div>
+<div id="content">
+    <header>
+        <div class="nav no-select">
+            <span class="title no-select">ARTLOOM</span>
+            <span class="nav-menu no-select">
+                <span class="menu-item no-select"><a href="/">главная</a></span>
+                <span class="menu-item no-select"><a href="/search">поиск</a></span>
+                <span class="menu-item no-select" id="pc-username"><a href="/login">вход</a></span>
+            </span>
+            <span class="nav-menu-button no-select">
+                <img class="no-select" id="menu-icon" src="{{ url_for('static', filename='root/menu.svg') }}"
+                     alt="">
+            </span>
+        </div>
+    </header>
+
+    <div class="more no-select" id="more">
+        <div class="container no-select">
+            <div class="menu-item no-select"><a href="/">главная</a></div>
+            <div class="menu-item no-select"><a href="/search">поиск</a></div>
+            <div class="menu-item vertical-last no-select" id="mobile-username"><a href="/login">вход</a></div>
+        </div>
+    </div>
+
+    <div class="main-page-content">
+        <div class="gradient-banner">
+            <div class="flex-container">
+                <img class="abstract no-select" src="../static/root/abstract.png" alt="">
+<!--                <h1 class="gradient-banner-text">ARTLOOM</h1>-->
+            </div>
+            <div class="flex-container-transition">
+                <div class="border-transition"></div>
+            </div>
+        </div>
+
+        <div class="search-wrapper">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Введите запрос для поиска картин">
+                <button id="search-button">Найти</button>
+            </div>
+        </div>
+
+        <div class="container no-select">
+            <div id="gallery" class="gallery no-select"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container no-select" id="contacts">
+            <div class="links no-select"></div>
+            <div class="copy no-select"></div>
+        </div>
+    </footer>
+
+    <div class="overlay no-select" id="overlay">
+        <img class="no-select" src="" alt="" id="fullImage">
+        <div class="image-description no-select" id="imageDescription"></div>
+    </div>
+</div>
+<script type="module" src="../static/js/pages/searchPage.js" onerror="handleScriptError()"></script>
+</body>
+</html>

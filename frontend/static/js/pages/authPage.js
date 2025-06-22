@@ -8,6 +8,10 @@ async function setupAuthPage() {
     await setupNavMenuButton(me);
 
     try {
+        const loader = document.getElementById('loader');
+        const overlay_l = document.getElementById('overlay-l');
+        const content = document.getElementById('content');
+
         const authForm = document.querySelector('form');
 
         const createAccountBtn = document.getElementById('create-account-btn');
@@ -16,6 +20,8 @@ async function setupAuthPage() {
         })
 
         authForm.addEventListener('submit', async (event) => {
+            overlay_l.style.display = 'block';
+            loader.style.display = 'block';
             event.preventDefault();
 
             const username = document.getElementById('name').value;
@@ -30,6 +36,9 @@ async function setupAuthPage() {
             } catch (error) {
                 await setupAlert(error.message);
             }
+            loader.style.display = 'none';
+            overlay_l.style.display = 'none';  
+            content.style.display = 'block';
         });
     } catch (error) {
         window.handleScriptError(error);

@@ -6,6 +6,10 @@ import {fetchCurrentAccount} from "../requests/fetchCurrentAccount.js";
 
 async function setupRegisterPage() {
     try {
+        const loader = document.getElementById('loader');
+        const overlay_l = document.getElementById('overlay-l');
+        const content = document.getElementById('content');
+
         const me = await fetchCurrentAccount();
         await setupNavMenuButton(me);
 
@@ -36,7 +40,8 @@ async function setupRegisterPage() {
 
         const form = document.querySelector('form');
         form.addEventListener('submit', async (event) => {
-
+            overlay_l.style.display = 'block';
+            loader.style.display = 'block';
             event.preventDefault();
 
 
@@ -78,8 +83,10 @@ async function setupRegisterPage() {
             } catch (error) {
                 await setupAlert(error.message);
             }
+            loader.style.display = 'none';
+            overlay_l.style.display = 'none';  
+            content.style.display = 'block';
         })
-
     } catch (error) {
         window.handleScriptError(error);
     }
